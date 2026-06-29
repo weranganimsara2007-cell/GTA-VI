@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grand Theft Auto VI | Official Reveal Experience | Rockstar Games</title>
+  <meta name="description" content="Experience the next era of open-world gaming. Welcome back to Vice City. Explore Leonida State in Grand Theft Auto VI. Pre-order now.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==================================================
+       CSS VARIABLES & RESET
+       ================================================== */
+    :root {
+      --bg: #050505;
+      --accent-primary: #FF6A00;
+      --accent-secondary: #FF9A2E;
+      --highlight: #FFD27A;
+      --text-primary: #FFFFFF;
+      --text-secondary: #A0A0A5;
+      --text-muted: #606065;
+      --glass-bg: rgba(10, 10, 10, 0.6);
+      --glass-border: rgba(255, 106, 0, 0.15);
+      --glass-border-hover: rgba(255, 106, 0, 0.5);
+      --neon-glow: 0 0 25px rgba(255, 106, 0, 0.4);
+      --neon-glow-strong: 0 0 45px rgba(255, 106, 0, 0.85);
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-fast: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--bg);
+      overflow-x: hidden;
+      cursor: none; /* Hide default cursor for custom cursor */
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080808;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #202025;
+      border: 2px solid #080808;
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-primary);
+      box-shadow: 0 0 10px var(--accent-primary);
+    }
+
+    /* ==================================================
+       BACKGROUND EFFECTS & OVERLAYS
+       ================================================== */
+    .noise-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      opacity: 0.035;
+      pointer-events: none;
+      z-index: 9999;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Radial Light Rays / Volumetric Background Lights */
+    .bg-lights {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-light-1 {
+      position: absolute;
+      top: -20%; left: -10%;
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, rgba(255, 106, 0, 0.07) 0%, rgba(0, 0, 0, 0) 70%);
+      filter: blur(100px);
+      animation: floatLight 25s infinite alternate ease-in-out;
+    }
+    .bg-light-2 {
+      position: absolute;
+      bottom: -10%; right: -10%;
+      width: 50vw; height: 50vw;
+      background: radial-gradient(circle, rgba(255, 154, 46, 0.05) 0%, rgba(0, 0, 0, 0) 75%);
+      filter: blur(120px);
+      animation: floatLight2 30s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatLight {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(10vw, 5vh) scale(1.2); }
+    }
+    @keyframes floatLight2 {
+      0% { transform: translate(0, 0) scale(1.1); }
+      100% { transform: translate(-8vw, -10vh) scale(0.9); }
+    }
+
+    /* ==================================================
+       CUSTOM CURSOR
+       ================================================== */
+    .cursor-dot {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background-color: var(--accent-primary);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: width 0.1s ease, height 0.1s ease;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255, 106, 0, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease-out, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 106, 0, 0.1);
+    }
+    .cursor-ring.expanded {
+      width: 56px;
+      height: 56px;
+      background-color: rgba(255, 106, 0, 0.06);
+      border-color: var(--accent-primary);
+      box-shadow: var(--neon-glow);
+    }
+
+    /* Hide cursor on touchscreen devices */
+    @media (hover: none) and (pointer: coarse) {
+      .cursor-dot, .cursor-ring {
+        display: none !important;
+      }
+      body {
+        cursor: auto !important;
+      }
+    }
+
+    /* ==================================================
+       NAVIGATION BAR
+       ================================================== */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 90px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 6%;
+      z-index: 1000;
+      transition: background-color 0.5s ease, backdrop-filter 0.5s ease, border-bottom 0.5s ease, height 0.5s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .navbar.scrolled {
+      height: 75px;
+      background-color: rgba(5, 5, 5, 0.75);
+      backdrop-filter: blur(25px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 106, 0, 0.1);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-decoration: none;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-transform: uppercase;
+    }
+    .nav-logo span {
+      font-weight: 400;
+      color: #FFF;
+    }
+    .nav-logo .roman-vi {
+      color: var(--accent-primary);
+      font-weight: 700;
+      text-shadow: var(--neon-glow-strong);
+      animation: logoGlow 4s infinite alternate ease-in-out;
+    }
+
+    @keyframes logoGlow {
+      0% { text-shadow: 0 0 10px rgba(255, 106, 0, 0.5); }
+      100% { text-shadow: 0 0 25px rgba(255, 106, 0, 0.9), 0 0 40px rgba(255, 154, 46, 0.5); }
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      gap: 35px;
+    }
+    .nav-link {
+      font-family: var(--font-display);
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: var(--transition-fast);
+      position: relative;
+      padding: 5px 0;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background-color: var(--accent-primary);
+      transition: var(--transition-fast);
+      box-shadow: var(--neon-glow);
+    }
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .btn-nav-preorder {
+      font-family: var(--font-display);
+      text-decoration: none;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      padding: 10px 22px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      box-shadow: var(--neon-glow);
+      transition: var(--transition-fast);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .btn-nav-preorder:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--neon-glow-strong);
+      filter: brightness(1.1);
+    }
+
+    /* Mobile Hamburger Menu Toggle */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 25px;
+      height: 2px;
+      background-color: var(--text-primary);
+      transition: var(--transition-fast);
+    }
+
+    /* ==================================================
+       HERO SECTION
+       ================================================== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .hero-video-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background-color: #000;
+    }
+    .hero-video-container::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, rgba(5,5,5,0.85) 100%);
+      z-index: 2;
+    }
+    .hero-video {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 100%; height: 100%;
+      min-width: 100%; min-height: 100%;
+      object-fit: cover;
+      transform: translate(-50%, -50%) scale(1.03);
+      transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), filter 1.8s ease;
+      filter: brightness(0.35) contrast(1.1) saturate(0.85);
+      z-index: 1;
+    }
+    .hero:hover .hero-video {
+      transform: translate(-50%, -50%) scale(1.08);
+      filter: brightness(0.6) contrast(1.2) saturate(1.15);
+    }
+
+    /* Animated Glow Behind Hero Content */
+    .hero-glow-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255, 106, 0, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 2;
+      animation: pulseHeroGlow 8s infinite alternate ease-in-out;
+    }
+    @keyframes pulseHeroGlow {
+      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+      100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    }
+
+    .hero-content {
+      width: 80%;
+      max-width: 1100px;
+      text-align: center;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Typewriter Box */
+    .typewriter-box {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 6px;
+      color: var(--text-primary);
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .typewriter-box.fade-out {
+      opacity: 0;
+      transform: scale(0.95) translateY(-20px);
+    }
+    .typewriter-cursor {
+      display: inline-block;
+      width: 4px;
+      height: 2.4rem;
+      background-color: var(--accent-primary);
+      margin-left: 8px;
+      animation: blinkCursor 0.75s infinite steps(2);
+      box-shadow: var(--neon-glow);
+    }
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* Main Hero Details (faded in later) */
+    .hero-main-content {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+      display: none;
+    }
+    .hero-main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+      display: block;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: 4.8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      background: linear-gradient(to right, #FFF 20%, var(--highlight) 60%, var(--accent-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 25px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-paragraph {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 720px;
+      line-height: 1.7;
+      margin: 0 auto 40px auto;
+      font-weight: 300;
+    }
+
+    .hero-ctas {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .btn-primary {
+      font-family: var(--font-display);
+      text-decoration: none;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      padding: 16px 45px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: var(--neon-glow);
+      transition: var(--transition-smooth);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: var(--neon-glow-strong);
+      filter: brightness(1.1);
+    }
+
+    .btn-secondary {
+      font-family: var(--font-display);
+      text-decoration: none;
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 16px 45px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      transition: var(--transition-smooth);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 106, 0, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(255, 106, 0, 0.1);
+    }
+
+    /* ==================================================
+       FLOATING HUD (RIGHT SIDE)
+       ================================================== */
+    .floating-hud {
+      position: absolute;
+      right: 4%;
+      top: 50%;
+      transform: translateY(-50%) translateX(50px);
+      opacity: 0;
+      width: 250px;
+      background: rgba(10, 10, 10, 0.45);
+      border: 1px solid rgba(255, 106, 0, 0.12);
+      backdrop-filter: blur(15px);
+      border-radius: 8px;
+      padding: 22px 20px;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .floating-hud.visible {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+    .hud-header {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 106, 0, 0.15);
+      padding-bottom: 8px;
+      font-weight: 700;
+    }
+    .hud-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+    .hud-label {
+      letter-spacing: 0.5px;
+    }
+    .hud-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      color: var(--text-primary);
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .hud-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--accent-primary);
+      box-shadow: var(--neon-glow);
+      animation: pulseDot 1.5s infinite alternate ease-in-out;
+    }
+    
+    @keyframes pulseDot {
+      0% { opacity: 0.4; box-shadow: 0 0 2px var(--accent-primary); }
+      100% { opacity: 1; box-shadow: 0 0 10px var(--accent-primary); }
+    }
+
+    /* Staggered delay for hud dot anims to feel alive */
+    .hud-item:nth-child(2) .hud-dot { animation-delay: 0.1s; }
+    .hud-item:nth-child(3) .hud-dot { animation-delay: 0.3s; }
+    .hud-item:nth-child(4) .hud-dot { animation-delay: 0.5s; }
+    .hud-item:nth-child(5) .hud-dot { animation-delay: 0.2s; }
+    .hud-item:nth-child(6) .hud-dot { animation-delay: 0.7s; }
+    .hud-item:nth-child(7) .hud-dot { animation-delay: 0.4s; }
+    .hud-item:nth-child(8) .hud-dot { animation-delay: 0.6s; }
+
+    /* ==================================================
+       MARQUEE
+       ================================================== */
+    .marquee-container {
+      width: 100vw;
+      overflow: hidden;
+      background: linear-gradient(to right, rgba(255, 106, 0, 0.05) 0%, rgba(255, 106, 0, 0) 50%, rgba(255, 106, 0, 0.05) 100%);
+      border-top: 1px solid rgba(255, 106, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 106, 0, 0.1);
+      padding: 16px 0;
+      position: relative;
+      z-index: 2;
+    }
+    .marquee-content {
+      display: flex;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+    .marquee-text {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 4px;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      padding-right: 40px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    
+    @keyframes marquee {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    /* ==================================================
+       SECTIONS GENERAL STYLES
+       ================================================== */
+    section {
+      padding: 120px 8%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-header {
+      margin-bottom: 70px;
+      max-width: 800px;
+    }
+    .section-subtitle {
+      font-family: var(--font-display);
+      color: var(--accent-primary);
+      font-size: 0.9rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: linear-gradient(to right, #FFF 30%, var(--highlight) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    /* Glass Cards Base */
+    .glass-card {
+      background: rgba(12, 12, 12, 0.45);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(16px) saturate(180%);
+      border-radius: 8px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition-smooth);
+    }
+    /* Radial Mouse Highlight Grid Glow Effect */
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border-radius: inherit;
+      background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255, 106, 0, 0.07), transparent 45%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ==================================================
+       GAME OVERVIEW
+       ================================================== */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .overview-card {
+      display: flex;
+      flex-direction: column;
+      height: 380px;
+      justify-content: space-between;
+    }
+    .overview-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 106, 0, 0.45);
+      box-shadow: 0 15px 35px rgba(255, 106, 0, 0.08);
+    }
+
+    .overview-icon-container {
+      width: 50px;
+      height: 50px;
+      border-radius: 4px;
+      background: rgba(255, 106, 0, 0.1);
+      border: 1px solid rgba(255, 106, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      color: var(--accent-primary);
+      font-size: 1.5rem;
+    }
+
+    .overview-card-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    .overview-card-p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    .overview-card-footer {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--accent-secondary);
+      text-transform: uppercase;
+      margin-top: auto;
+      font-weight: 600;
+      opacity: 0.8;
+      transition: var(--transition-fast);
+    }
+    .overview-card:hover .overview-card-footer {
+      opacity: 1;
+      letter-spacing: 3px;
+    }
+
+    /* ==================================================
+       WORLD SHOWCASE
+       ================================================== */
+    .showcase-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .specs-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition-fast);
+    }
+    .specs-row:hover {
+      padding-left: 8px;
+      background: rgba(255, 106, 0, 0.02);
+      border-bottom-color: rgba(255, 106, 0, 0.2);
+    }
+    .specs-key {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .specs-val {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      text-align: right;
+    }
+
+    /* Showcase Interactive Circle on the Right */
+    .circle-showcase-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .interactive-circle {
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: none;
+      transition: var(--transition-smooth);
+      border: 2px solid rgba(255, 106, 0, 0.3);
+      box-shadow: 0 0 30px rgba(255, 106, 0, 0.1);
+    }
+    .interactive-circle::before {
+      content: '';
+      position: absolute;
+      top: -10px; left: -10px; right: -10px; bottom: -10px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 106, 0, 0.2);
+      animation: rotateCircle 20s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes rotateCircle {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .circle-video-container {
+      width: 90%;
+      height: 90%;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      border: 3px solid rgba(5, 5, 5, 1);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+    .circle-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.6) saturate(0.85);
+      transition: var(--transition-smooth);
+    }
+
+    /* Circle Hover State */
+    .interactive-circle:hover {
+      width: 410px;
+      height: 410px;
+      border-color: var(--accent-primary);
+      box-shadow: var(--neon-glow-strong);
+    }
+    .interactive-circle:hover .circle-video {
+      filter: brightness(1) saturate(1.1);
+      transform: scale(1.05);
+    }
+
+    /* ==================================================
+       CHARACTERS
+       ================================================== */
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .character-card {
+      height: 480px;
+      border-radius: 8px;
+      background: rgba(12, 12, 12, 0.5);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(15px);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 35px 30px;
+      transition: var(--transition-smooth);
+    }
+    .character-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border-radius: inherit;
+      background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255, 106, 0, 0.08), transparent 45%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Conceptual Graphic Gradient Overlay for character themes */
+    .character-bg-gradient {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1;
+      opacity: 0.2;
+      transition: var(--transition-smooth);
+    }
+    .char-lucia .character-bg-gradient {
+      background: linear-gradient(135deg, #FF3366 0%, #050505 80%);
+    }
+    .char-jason .character-bg-gradient {
+      background: linear-gradient(135deg, #FF6A00 0%, #050505 80%);
+    }
+    .char-underworld .character-bg-gradient {
+      background: linear-gradient(135deg, #9933FF 0%, #050505 80%);
+    }
+    .char-police .character-bg-gradient {
+      background: linear-gradient(135deg, #0066FF 0%, #050505 80%);
+    }
+
+    .character-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent-primary);
+      box-shadow: 0 15px 35px rgba(255, 106, 0, 0.12);
+    }
+    .character-card:hover .character-bg-gradient {
+      opacity: 0.45;
+    }
+
+    .character-info {
+      position: relative;
+      z-index: 2;
+    }
+    .character-tag {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: var(--accent-primary);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .character-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #FFF;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .character-bio {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-weight: 300;
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+      transition: var(--transition-smooth);
+    }
+    .character-card:hover .character-bio {
+      opacity: 1;
+      height: 70px;
+      margin-top: 5px;
+    }
+
+    /* ==================================================
+       VICE CITY GALLERY
+       ================================================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .gallery-item {
+      height: 250px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition-smooth);
+    }
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-smooth);
+      filter: brightness(0.6) saturate(0.85);
+    }
+    .gallery-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(5,5,5,0) 50%, rgba(5,5,5,0.95) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 22px;
+      opacity: 0;
+      transition: var(--transition-smooth);
+      z-index: 2;
+    }
+    .gallery-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-primary);
+      transform: translateY(10px);
+      transition: var(--transition-smooth);
+    }
+
+    .gallery-item:hover {
+      border-color: var(--accent-primary);
+      box-shadow: var(--neon-glow);
+    }
+    .gallery-item:hover .gallery-img {
+      transform: scale(1.08);
+      filter: brightness(0.9) saturate(1.1);
+    }
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+    .gallery-item:hover .gallery-title {
+      transform: translateY(0);
+    }
+
+    /* ==================================================
+       GAMEPLAY METRICS
+       ================================================== */
+    .metrics-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .metric-row {
+      margin-bottom: 35px;
+    }
+    .metric-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .metric-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .metric-percentage {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+    }
+
+    .metric-bar-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .metric-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+      border-radius: 10px;
+      box-shadow: 0 0 12px var(--accent-primary);
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ==================================================
+       SYSTEM REQUIREMENTS
+       ================================================== */
+    .sysreq-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .sysreq-card {
+      border: 1px solid var(--glass-border);
+      background: rgba(12, 12, 12, 0.45);
+      backdrop-filter: blur(15px);
+      border-radius: 8px;
+      padding: 40px 30px;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+    .sysreq-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border-radius: inherit;
+      background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255, 106, 0, 0.08), transparent 45%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .sysreq-card.recommended {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 25px rgba(255, 106, 0, 0.06);
+    }
+    .sysreq-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-primary);
+      box-shadow: 0 12px 30px rgba(255, 106, 0, 0.12);
+    }
+
+    .sysreq-badge {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      padding: 4px 10px;
+      border-radius: 3px;
+      background: rgba(255, 106, 0, 0.15);
+      border: 1px solid rgba(255, 106, 0, 0.3);
+      color: var(--accent-primary);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .sysreq-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 30px;
+    }
+
+    .sysreq-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .sysreq-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .sysreq-label {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .sysreq-value {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+
+    /* ==================================================
+       TRAILER SECTION
+       ================================================== */
+    .trailer-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8);
+      position: relative;
+      aspect-ratio: 16 / 9;
+      transition: var(--transition-smooth);
+    }
+    .trailer-wrapper:hover {
+      border-color: var(--accent-primary);
+      box-shadow: var(--neon-glow-strong);
+      transform: scale(1.015);
+    }
+    
+    .trailer-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .trailer-cover {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, rgba(5,5,5,0.85) 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+      transition: opacity 0.5s ease;
+    }
+    .trailer-wrapper.playing .trailer-cover {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn-play-reveal {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: none;
+      box-shadow: var(--neon-glow-strong);
+      transition: var(--transition-smooth);
+    }
+    .btn-play-reveal svg {
+      width: 25px;
+      height: 25px;
+      fill: var(--text-primary);
+      transform: translateX(2px);
+    }
+    .trailer-wrapper:hover .btn-play-reveal {
+      transform: scale(1.1);
+      box-shadow: 0 0 40px rgba(255, 106, 0, 1);
+    }
+
+    /* ==================================================
+       PRE-ORDER SECTION
+       ================================================== */
+    .preorder-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 140px 8%;
+      background: radial-gradient(circle at center, rgba(255, 106, 0, 0.06) 0%, rgba(5, 5, 5, 0) 65%);
+      position: relative;
+    }
+    
+    .preorder-title {
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(to right, #FFF 20%, var(--highlight) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 25px;
+      line-height: 1.1;
+    }
+
+    .preorder-p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 45px;
+      font-weight: 300;
+    }
+
+    /* ==================================================
+       FOOTER
+       ================================================== */
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 60px 8% 40px 8%;
+      background-color: #030303;
+      z-index: 2;
+      position: relative;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+    
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .footer-logo span {
+      color: var(--accent-primary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+    .footer-link {
+      font-family: var(--font-display);
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: var(--transition-fast);
+    }
+    .footer-link:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      padding-top: 30px;
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+    .footer-legal-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      transition: var(--transition-fast);
+    }
+    .footer-legal-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* ==================================================
+       ANIMATIONS (SCROLL-TRIGGERED FADES & SLIDES)
+       ================================================== */
+    .fade-up-element {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-up-element.triggered {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger transitions helper classes */
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    /* ==================================================
+       RESPONSIVE DESIGN (TABLETS & MOBILE)
+       ================================================== */
+    @media (max-width: 1024px) {
+      .navbar {
+        padding: 0 4%;
+      }
+      .nav-menu {
+        gap: 20px;
+      }
+      .hero-headline {
+        font-size: 3.8rem;
+      }
+      .floating-hud {
+        display: none; /* Hide right-side HUD on smaller screen widths for layout clarity */
+      }
+      .overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .overview-card {
+        height: 340px;
+      }
+      .character-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .sysreq-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      .showcase-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .interactive-circle {
+        width: 320px;
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+        z-index: 1100;
+      }
+      
+      /* Mobile Menu Drawer style */
+      .nav-menu {
+        position: fixed;
+        top: 0; right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: rgba(5, 5, 5, 0.98);
+        backdrop-filter: blur(30px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        border-left: 1px solid rgba(255, 106, 0, 0.15);
+      }
+      .nav-menu.open {
+        right: 0;
+      }
+
+      /* Burger icon animation */
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+        background-color: var(--accent-primary);
+      }
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+        background-color: var(--accent-primary);
+      }
+
+      section {
+        padding: 80px 5%;
+      }
+      .hero-headline {
+        font-size: 2.8rem;
+      }
+      .hero-paragraph {
+        font-size: 0.95rem;
+      }
+      .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        gap: 15px;
+      }
+      .btn-primary, .btn-secondary {
+        padding: 14px 0;
+        text-align: center;
+      }
+      .typewriter-box {
+        font-size: 1.6rem;
+      }
+      .section-title {
+        font-size: 2.2rem;
+      }
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+      .character-grid {
+        grid-template-columns: 1fr;
+      }
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      .preorder-title {
+        font-size: 2.8rem;
+      }
+      .footer-top {
+        flex-direction: column;
+        gap: 30px;
+        align-items: flex-start;
+      }
+      .footer-links {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .footer-bottom {
+        flex-direction: column-reverse;
+        gap: 20px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Overlays -->
+  <div class="noise-overlay"></div>
+  <canvas id="particles-canvas"></canvas>
+  <div class="bg-lights">
+    <div class="bg-light-1"></div>
+    <div class="bg-light-2"></div>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="navbar">
+    <a href="#" class="nav-logo clickable">
+      <span>GTA</span>
+      <span class="roman-vi">VI</span>
+    </a>
+    
+    <button class="menu-toggle clickable" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
+    <ul class="nav-menu">
+      <li><a href="#overview" class="nav-link clickable">Overview</a></li>
+      <li><a href="#characters" class="nav-link clickable">Characters</a></li>
+      <li><a href="#showcase" class="nav-link clickable">Vice City</a></li>
+      <li><a href="#metrics" class="nav-link clickable">Gameplay</a></li>
+      <li><a href="#trailer" class="nav-link clickable">Trailers</a></li>
+      <li><a href="#preorder" class="btn-nav-preorder clickable">Pre-Order</a></li>
+    </ul>
+  </header>
+
+  <!-- ==================================================
+       HERO SECTION
+       ================================================== -->
+  <section class="hero" id="hero">
+    <div class="hero-glow-glow"></div>
+    
+    <div class="hero-video-container">
+      <video class="hero-video" autoplay loop muted playsinline>
+        <source src="GTA.mp4" type="video/mp4">
+      </video>
+    </div>
+    
+    <div class="hero-content">
+      <!-- Typewriter Sequence Box -->
+      <div class="typewriter-box" id="typewriter-box">
+        <span id="typewriter-text"></span>
+        <span class="typewriter-cursor"></span>
+      </div>
+
+      <!-- Main Reveal Header Content -->
+      <div class="hero-main-content" id="hero-main-content">
+        <h1 class="hero-headline">THE NEXT ERA OF CRIME</h1>
+        <p class="hero-paragraph">
+          Experience the biggest and most ambitious open world ever created. Explore the vibrant streets of Vice City, meet unforgettable characters, build your criminal empire, and redefine freedom in Rockstar Games' most advanced world.
+        </p>
+        <div class="hero-ctas">
+          <a href="#trailer" class="btn-primary clickable">Watch Trailer</a>
+          <a href="#preorder" class="btn-secondary clickable">Pre-Order</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating HUD Overlay -->
+    <div class="floating-hud" id="floating-hud">
+      <div class="hud-header">Leonida OS v6.0</div>
+      
+      <div class="hud-item">
+        <span class="hud-label">World</span>
+        <span class="hud-indicator">Leonida State <span class="hud-dot"></span></span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">District</span>
+        <span class="hud-indicator">Vice City <span class="hud-dot"></span></span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Graphics Mode</span>
+        <span class="hud-indicator">Next-Gen HDR <span class="hud-dot"></span></span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Ray Tracing</span>
+        <span class="hud-indicator">Active <span class="hud-dot"></span></span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Frame Rate</span>
+        <span class="hud-indicator">60 FPS <span class="hud-dot"></span></span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">NPC AI System</span>
+        <span class="hud-indicator">Advanced RAGE <span class="hud-dot"></span></span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Weather Grid</span>
+        <span class="hud-indicator">Dynamic <span class="hud-dot"></span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       MARQUEE
+       ================================================== -->
+  <div class="marquee-container">
+    <div class="marquee-content">
+      <span class="marquee-text">VICE CITY • LEONIDA • NEXT-GEN OPEN WORLD • DYNAMIC WEATHER • ROCKSTAR GAMES • RAY TRACING • 4K HDR • AI NPC SYSTEM • NEXT GENERATION • GTA VI</span>
+      <span class="marquee-text">VICE CITY • LEONIDA • NEXT-GEN OPEN WORLD • DYNAMIC WEATHER • ROCKSTAR GAMES • RAY TRACING • 4K HDR • AI NPC SYSTEM • NEXT GENERATION • GTA VI</span>
+    </div>
+  </div>
+
+  <!-- ==================================================
+       GAME OVERVIEW
+       ================================================== -->
+  <section id="overview">
+    <div class="section-header fade-up-element">
+      <span class="section-subtitle">Features Overview</span>
+      <h2 class="section-title">Redefining AAA Sandbox</h2>
+    </div>
+
+    <div class="overview-grid">
+      <!-- Feature Card 1 -->
+      <div class="glass-card overview-card fade-up-element delay-1">
+        <div>
+          <div class="overview-icon-container">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <h3 class="overview-card-title">Massive Open World</h3>
+          <p class="overview-card-p">
+            Leonida State is the largest, most detailed open world map built by Rockstar Games. Seamlessly journey from dense neon skyline districts to expansive swamplands and tropical coastlines.
+          </p>
+        </div>
+        <div class="overview-card-footer">Explore Leonida</div>
+      </div>
+
+      <!-- Feature Card 2 -->
+      <div class="glass-card overview-card fade-up-element delay-2">
+        <div>
+          <div class="overview-icon-container">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h3 class="overview-card-title">Living Vice City</h3>
+          <p class="overview-card-p">
+            Powered by advanced behavioral algorithms, NPCs lead fully routine lives. Witness dynamic nightclub environments, gridlocked highway systems, customized crime systems, and simulated luxury markets.
+          </p>
+        </div>
+        <div class="overview-card-footer">Real-world AI</div>
+      </div>
+
+      <!-- Feature Card 3 -->
+      <div class="glass-card overview-card fade-up-element delay-3">
+        <div>
+          <div class="overview-icon-container">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+          </div>
+          <h3 class="overview-card-title">Next-Gen Graphics</h3>
+          <p class="overview-card-p">
+            Utilizing next-generation RAGE engine physics. Fully integrated ray tracing, volumetric light rays, globally simulated physics, and ultra-dynamic weather models rendering the Leonida environment.
+          </p>
+        </div>
+        <div class="overview-card-footer">Tech Specs</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       WORLD SHOWCASE SECTION
+       ================================================== -->
+  <section id="showcase">
+    <div class="section-header fade-up-element">
+      <span class="section-subtitle">World Showcase</span>
+      <h2 class="section-title">Experience Leonida State</h2>
+    </div>
+
+    <div class="showcase-container">
+      <!-- Specifications table on the Left -->
+      <div class="specs-table-container fade-up-element delay-1">
+        <div class="specs-table">
+          <div class="specs-row">
+            <span class="specs-key">World</span>
+            <span class="specs-val">Leonida State</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">City</span>
+            <span class="specs-val">Vice City</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Players</span>
+            <span class="specs-val">Single Player Story</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Platforms</span>
+            <span class="specs-val">PlayStation 5 | Xbox Series X|S</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Game Engine</span>
+            <span class="specs-val">Rockstar RAGE Engine (Next-Gen)</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Visual Specs</span>
+            <span class="specs-val">4K HDR, Ray Traced Shadows & GI</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">NPC AI Grid</span>
+            <span class="specs-val">Advanced Routine & Crowds</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Vehicles</span>
+            <span class="specs-val">Hundreds of custom luxury assets</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-key">Activities</span>
+            <span class="specs-val">Unlimited Open Sandbox</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Glowing interactive circle on the Right -->
+      <div class="circle-showcase-wrapper fade-up-element delay-2">
+        <div class="interactive-circle clickable">
+          <div class="circle-video-container">
+            <video class="circle-video" autoplay loop muted playsinline>
+              <source src="GTA.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       CHARACTERS SECTION
+       ================================================== -->
+  <section id="characters">
+    <div class="section-header fade-up-element">
+      <span class="section-subtitle">Characters</span>
+      <h2 class="section-title">The Faces of Vice City</h2>
+    </div>
+
+    <div class="character-grid">
+      <!-- Jason Card -->
+      <div class="character-card char-jason fade-up-element delay-1">
+        <div class="character-bg-gradient"></div>
+        <div class="character-info">
+          <div class="character-tag">Protagonist</div>
+          <h3 class="character-name">Jason</h3>
+          <p class="character-bio">
+            A street-smart hustler walking the thin line of high-stakes crime. Partners with Lucia to claim Vice City's underworld.
+          </p>
+        </div>
+      </div>
+
+      <!-- Lucia Card -->
+      <div class="character-card char-lucia fade-up-element delay-2">
+        <div class="character-bg-gradient"></div>
+        <div class="character-info">
+          <div class="character-tag">Protagonist</div>
+          <h3 class="character-name">Lucia</h3>
+          <p class="character-bio">
+            Calculated, dangerous, and recently out of the state penitentiary. Determined to take over Leonida by any means necessary.
+          </p>
+        </div>
+      </div>
+
+      <!-- Vice City Underworld Card -->
+      <div class="character-card char-underworld fade-up-element delay-3">
+        <div class="character-bg-gradient"></div>
+        <div class="character-info">
+          <div class="character-tag">Factions</div>
+          <h3 class="character-name">Underworld</h3>
+          <p class="character-bio">
+            Cartel heads, yacht-club high rollers, and street gangs controlling the shadow economy from keys to swamps.
+          </p>
+        </div>
+      </div>
+
+      <!-- Law Enforcement Card -->
+      <div class="character-card char-police fade-up-element delay-4">
+        <div class="character-bg-gradient"></div>
+        <div class="character-info">
+          <div class="character-tag">Opponents</div>
+          <h3 class="character-name">VCPD & SWAT</h3>
+          <p class="character-bio">
+            Armed with AI tactical networks, patrolling the shores, highways, and skies of Leonida State to stop the duo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       VICE CITY GALLERY SECTION
+       ================================================== -->
+  <section id="gallery">
+    <div class="section-header fade-up-element">
+      <span class="section-subtitle">Gallery</span>
+      <h2 class="section-title">Neon & Sunshine</h2>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- Item 1 -->
+      <div class="gallery-item clickable fade-up-element delay-1">
+        <img class="gallery-img" src="vicecity1.jpg" alt="Vice City street sunset">
+        <div class="gallery-overlay">
+          <h4 class="gallery-title">Ocean Drive</h4>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="gallery-item clickable fade-up-element delay-2">
+        <img class="gallery-img" src="vicecity2.jpg" alt="Vice City beachfront skyline">
+        <div class="gallery-overlay">
+          <h4 class="gallery-title">Leonida Shoreline</h4>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="gallery-item clickable fade-up-element delay-3">
+        <img class="gallery-img" src="vicecity3.jpg" alt="Vice City luxury nightclub">
+        <div class="gallery-overlay">
+          <h4 class="gallery-title">Club Neon</h4>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="gallery-item clickable fade-up-element delay-4">
+        <img class="gallery-img" src="vicecity4.jpg" alt="Vice City aerial view">
+        <div class="gallery-overlay">
+          <h4 class="gallery-title">Twilight Skyline</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       GAMEPLAY METRICS SECTION
+       ================================================== -->
+  <section id="metrics">
+    <div class="section-header fade-up-element">
+      <span class="section-subtitle">Realism Benchmark</span>
+      <h2 class="section-title">Gameplay Performance</h2>
+    </div>
+
+    <div class="metrics-container">
+      <!-- Metric Row 1 -->
+      <div class="metric-row fade-up-element">
+        <div class="metric-info">
+          <span class="metric-name">Open World Scale</span>
+          <span class="metric-percentage">100%</span>
+        </div>
+        <div class="metric-bar-track">
+          <div class="metric-bar-fill" data-percentage="100%"></div>
+        </div>
+      </div>
+
+      <!-- Metric Row 2 -->
+      <div class="metric-row fade-up-element">
+        <div class="metric-info">
+          <span class="metric-name">Next-Gen Graphics & Shadows</span>
+          <span class="metric-percentage">99%</span>
+        </div>
+        <div class="metric-bar-track">
+          <div class="metric-bar-fill" data-percentage="99%"></div>
+        </div>
+      </div>
+
+      <!-- Metric Row 3 -->
+      <div class="metric-row fade-up-element">
+        <div class="metric-info">
+          <span class="metric-name">AI NPC Neural Behaviors</span>
+          <span class="metric-percentage">98%</span>
+        </div>
+        <div class="metric-bar-track">
+          <div class="metric-bar-fill" data-percentage="98%"></div>
+        </div>
+      </div>
+
+      <!-- Metric Row 4 -->
+      <div class="metric-row fade-up-element">
+        <div class="metric-info">
+          <span class="metric-name">Vehicle Handling & Damage Physics</span>
+          <span class="metric-percentage">97%</span>
+        </div>
+        <div class="metric-bar-track">
+          <div class="metric-bar-fill" data-percentage="97%"></div>
+        </div>
+      </div>
+
+      <!-- Metric Row 5 -->
+      <div class="metric-row fade-up-element">
+        <div class="metric-info">
+          <span class="metric-name">Custom Character Animations</span>
+          <span class="metric-percentage">99%</span>
+        </div>
+        <div class="metric-bar-track">
+          <div class="metric-bar-fill" data-percentage="99%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       SYSTEM REQUIREMENTS
+       ================================================== -->
+  <section id="sysreq">
+    <div class="section-header fade-up-element">
+      <span class="section-subtitle">Technical requirements</span>
+      <h2 class="section-title">System Configurations</h2>
+    </div>
+
+    <div class="sysreq-grid">
+      <!-- Minimum -->
+      <div class="sysreq-card fade-up-element delay-1">
+        <span class="sysreq-badge">1080p | 30 FPS</span>
+        <h3 class="sysreq-title">Minimum</h3>
+        <ul class="sysreq-list">
+          <li class="sysreq-item">
+            <span class="sysreq-label">OS</span>
+            <span class="sysreq-value">Windows 11 (64-bit)</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Processor</span>
+            <span class="sysreq-value">Intel Core i7-8700K / AMD Ryzen 5 3600</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Memory</span>
+            <span class="sysreq-value">16 GB RAM</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Graphics</span>
+            <span class="sysreq-value">NVIDIA RTX 2070 Super / RX 6700 XT</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Storage</span>
+            <span class="sysreq-value">150 GB NVMe SSD</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Recommended -->
+      <div class="sysreq-card recommended fade-up-element delay-2">
+        <span class="sysreq-badge">1440p | 60 FPS</span>
+        <h3 class="sysreq-title">Recommended</h3>
+        <ul class="sysreq-list">
+          <li class="sysreq-item">
+            <span class="sysreq-label">OS</span>
+            <span class="sysreq-value">Windows 11 (64-bit)</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Processor</span>
+            <span class="sysreq-value">Intel Core i5-12600K / AMD Ryzen 7 5800X</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Memory</span>
+            <span class="sysreq-value">32 GB RAM</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Graphics</span>
+            <span class="sysreq-value">NVIDIA RTX 4070 Ti / RX 7900 XT</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Storage</span>
+            <span class="sysreq-value">150 GB NVMe Gen4 SSD</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Ultra -->
+      <div class="sysreq-card fade-up-element delay-3">
+        <span class="sysreq-badge">4K | 60 FPS | Ray Tracing</span>
+        <h3 class="sysreq-title">Ultra</h3>
+        <ul class="sysreq-list">
+          <li class="sysreq-item">
+            <span class="sysreq-label">OS</span>
+            <span class="sysreq-value">Windows 11 (64-bit)</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Processor</span>
+            <span class="sysreq-value">Intel Core i9-13900K / AMD Ryzen 9 7900X3D</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Memory</span>
+            <span class="sysreq-value">32 GB RAM (DDR5)</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Graphics</span>
+            <span class="sysreq-value">NVIDIA RTX 4080 Super / RX 7950 XTX</span>
+          </li>
+          <li class="sysreq-item">
+            <span class="sysreq-label">Storage</span>
+            <span class="sysreq-value">150 GB PCIe 5.0 SSD</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       TRAILER SECTION
+       ================================================== -->
+  <section id="trailer">
+    <div class="section-header fade-up-element">
+      <span class="section-subtitle">Official Trailer</span>
+      <h2 class="section-title">The Cinematic Reveal</h2>
+    </div>
+
+    <div class="trailer-wrapper fade-up-element clickable">
+      <div class="trailer-cover">
+        <button class="btn-play-reveal clickable" aria-label="Play Trailer">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+      <video class="trailer-video" loop muted playsinline>
+        <source src="hh.mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       PRE-ORDER SECTION
+       ================================================== -->
+  <section class="preorder-cta" id="preorder">
+    <div class="section-header fade-up-element">
+      <span class="section-subtitle">Pre-Order Now</span>
+      <h2 class="preorder-title">THE WORLD IS YOURS.</h2>
+      <p class="preorder-p">
+        Pre-order Grand Theft Auto VI and prepare to return to Vice City like never before. Exclusive digital bonuses are unlocked at launch.
+      </p>
+      <a href="#preorder" class="btn-primary clickable">PRE-ORDER NOW</a>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       FOOTER
+       ================================================== -->
+  <footer class="footer">
+    <div class="footer-top">
+      <a href="#" class="footer-logo clickable">GRAND THEFT AUTO<span> VI</span></a>
+      <ul class="footer-links">
+        <li><a href="#hero" class="footer-link clickable">Overview</a></li>
+        <li><a href="#characters" class="footer-link clickable">Characters</a></li>
+        <li><a href="#showcase" class="footer-link clickable">Vice City</a></li>
+        <li><a href="#trailer" class="footer-link clickable">Trailers</a></li>
+        <li><a href="#" class="footer-link clickable">Support</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Rockstar Games, Inc. Grand Theft Auto, GTA VI, and R* logos are trademarks of Take-Two Interactive.</span>
+      <ul class="footer-legal">
+        <li><a href="#" class="footer-legal-link clickable">Privacy Policy</a></li>
+        <li><a href="#" class="footer-legal-link clickable">Terms of Service</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ==================================================
+       VANILLA JAVASCRIPT CONTROLLERS
+       ================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // ==========================================
+      // NAVBAR ACTION ON SCROLL
+      // ==========================================
+      const navbar = document.querySelector('.navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // ==========================================
+      // MOBILE HAMBURGER MENU DRAWER
+      // ==========================================
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('.nav-menu');
+      const navLinks = document.querySelectorAll('.nav-link, .btn-nav-preorder');
+
+      menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navMenu.classList.toggle('open');
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          menuToggle.classList.remove('active');
+          navMenu.classList.remove('open');
+        });
+      });
+
+      // ==========================================
+      // CUSTOM CURSOR CONTROLS
+      // ==========================================
+      const cursorDot = document.querySelector('.cursor-dot');
+      const cursorRing = document.querySelector('.cursor-ring');
+      let mouseX = 0, mouseY = 0;
+      let ringX = 0, ringY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+      });
+
+      // Custom lag/lerp effect on ring
+      function animateCursor() {
+        const easing = 0.15;
+        ringX += (mouseX - ringX) * easing;
+        ringY += (mouseY - ringY) * easing;
+        
+        cursorRing.style.left = `${ringX}px`;
+        cursorRing.style.top = `${ringY}px`;
+        
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+
+      // Trigger ring expanding classes on hoverables
+      const hoverables = document.querySelectorAll('.clickable');
+      hoverables.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+          cursorRing.classList.add('expanded');
+        });
+        item.addEventListener('mouseleave', () => {
+          cursorRing.classList.remove('expanded');
+        });
+      });
+
+      // ==========================================
+      // PARTICLES FLOATING EFFECT (CANVAS)
+      // ==========================================
+      const canvas = document.getElementById('particles-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      const particleCount = 45;
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      class Particle {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height + 20;
+          this.size = Math.random() * 2 + 0.6;
+          this.speedY = -(Math.random() * 0.9 + 0.3);
+          this.speedX = (Math.random() - 0.5) * 0.4;
+          this.alpha = Math.random() * 0.5 + 0.15;
+          this.fade = Math.random() * 0.003 + 0.001;
+        }
+        update() {
+          this.y += this.speedY;
+          this.x += this.speedX;
+          
+          if (this.y < 80) {
+            this.alpha -= this.fade;
+          }
+          if (this.y < 0 || this.alpha <= 0) {
+            this.reset();
+            this.y = canvas.height + Math.random() * 10;
+          }
+        }
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = this.alpha;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = '#FF7B00';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#FF6A00';
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+
+      // ==========================================
+      // TYPEWRITER INTRO SEQUENCE & REVEAL
+      // ==========================================
+      const typewriterText = document.getElementById('typewriter-text');
+      const introSequence = ["WELCOME", "BACK TO", "VICE CITY."];
+      let seqIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function handleTypewriter() {
+        const currentWord = introSequence[seqIndex];
+        
+        if (isDeleting) {
+          typewriterText.textContent = currentWord.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          typewriterText.textContent = currentWord.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        let speed = isDeleting ? 40 : 80;
+
+        if (!isDeleting && charIndex === currentWord.length) {
+          // Finished typing a word
+          if (seqIndex === introSequence.length - 1) {
+            // End of entire sequence
+            setTimeout(() => {
+              document.getElementById('typewriter-box').classList.add('fade-out');
+              setTimeout(() => {
+                document.getElementById('typewriter-box').style.display = 'none';
+                document.getElementById('hero-main-content').classList.add('visible');
+                document.getElementById('floating-hud').classList.add('visible');
+              }, 800);
+            }, 1200);
+            return;
+          }
+          speed = 900; // Hold typed word on screen
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          // Finished deleting
+          isDeleting = false;
+          seqIndex++;
+          speed = 250; // Delay before typing next word
+        }
+
+        setTimeout(handleTypewriter, speed);
+      }
+
+      // Start typewriter loop
+      setTimeout(handleTypewriter, 500);
+
+      // ==========================================
+      // CARD MOUSE LIGHT / GLOW REACTION
+      // ==========================================
+      const cards = document.querySelectorAll('.glass-card, .character-card, .sysreq-card');
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+
+      // ==========================================
+      // METRICS SCROLL OBSERVER (ANIMATE BARS)
+      // ==========================================
+      const progressBars = document.querySelectorAll('.metric-bar-fill');
+      const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const fillElement = entry.target;
+            const targetWidth = fillElement.getAttribute('data-percentage');
+            fillElement.style.width = targetWidth;
+            barObserver.unobserve(fillElement);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      progressBars.forEach(bar => barObserver.observe(bar));
+
+      // ==========================================
+      // SECTION SCROLL OBSERVER (FADE-IN EFFECT)
+      // ==========================================
+      const fadeElements = document.querySelectorAll('.fade-up-element');
+      const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('triggered');
+            // Keep observing if we want it to trigger only once
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+      fadeElements.forEach(el => fadeObserver.observe(el));
+
+      // ==========================================
+      // INTERACTIVE SPEC SHOWCASE CIRCLE
+      // ==========================================
+      const circleWrapper = document.querySelector('.interactive-circle');
+      const circleVideo = document.querySelector('.circle-video');
+
+      circleWrapper.addEventListener('mouseenter', () => {
+        circleVideo.play();
+      });
+
+      // ==========================================
+      // CINEMATIC TRAILER CONTROLLER (PLAY & UNMUTE)
+      // ==========================================
+      const trailerWrapper = document.querySelector('.trailer-wrapper');
+      const trailerVideo = document.querySelector('.trailer-video');
+
+      trailerWrapper.addEventListener('click', () => {
+        if (trailerVideo.paused) {
+          trailerVideo.play();
+          trailerVideo.muted = false; // Unmute on click
+          trailerWrapper.classList.add('playing');
+        } else {
+          trailerVideo.pause();
+          trailerWrapper.classList.remove('playing');
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
