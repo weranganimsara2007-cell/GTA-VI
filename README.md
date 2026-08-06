@@ -2,7 +2,7 @@
   # 🌌 WERA Xx‿x𝙓 — DIGITAL UNIVERSE
 
 
-💬 [Chat X — Web & Mobile App](https://chatx.sghome.space/)
+### 💬 [Chat X — Web & Mobile App](https://chatx.sghome.space/)
 *Conversation, reimagined as a living space.*
 
 * | Culinary Brand | Official recipe repository, culinary gallery & YouTube Shorts showcase | [Explore Portal](https://minichefworld.onrender.com/) |
